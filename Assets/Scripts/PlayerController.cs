@@ -5,23 +5,26 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
 
-    private int score = 0;
+    private int score;
     private float movementX;
     private float movementY;
     public float speed = 10;
 
     public TextMeshProUGUI countText;
+    public GameObject winTextObject;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         score = 0;
         setCountText();
+        winTextObject.SetActive(false);
     }
 
     public void FixedUpdate(){
         Vector3 movement = new Vector3(movementX, 0.0f, movementY);
         rb.AddForce(movement * speed);
+
     }
 
     void OnMove(InputValue movementValue){
@@ -40,5 +43,8 @@ public class PlayerController : MonoBehaviour
 
     void setCountText (){
         countText.text = "Count: " + score.ToString();
+        if(score >= 11){
+            winTextObject.SetActive(true);
+        }
     }
 }
