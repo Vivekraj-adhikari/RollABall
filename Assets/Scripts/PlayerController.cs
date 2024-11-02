@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using Unity.VisualScripting;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
@@ -45,6 +46,16 @@ public class PlayerController : MonoBehaviour
         countText.text = "Count: " + score.ToString();
         if(score >= 11){
             winTextObject.SetActive(true);
+            Destroy(GameObject.FindGameObjectWithTag("Enemy"));
+        }
+    }
+
+    private void OnCollisionEnter(Collision other){
+        if(other.gameObject.CompareTag("Enemy")){
+            Destroy(gameObject);
+
+            winTextObject.gameObject.SetActive(true);
+            winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
         }
     }
 }
